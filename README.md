@@ -31,6 +31,36 @@ To perform a successful acquisition, you will need:
 
 The most common method for obtaining a full-disk equivalent image in a forensically sound manner on a live macOS system is by using the **`asr`** (Apple Software Restore) utility.
 
+💾 Mac Forensics Imaging Guide
+This document outlines critical warnings and supported source options for forensic imaging of Apple Mac computers. Adherence to these guidelines is essential for obtaining complete and usable images.
+
+⚠️ Critical Warnings
+It is imperative that you are familiar with imaging Apple file systems before proceeding with any steps.
+ * Choosing the wrong source or output format may result in an unusable or incomplete image.
+ * Thoroughly review this manual before starting the imaging process.
+ * Always follow your agency’s approved procedures in conjunction with this guide.
+🎯 Supported Source Options by Mac Type
+Physical imaging is not possible on Apple Silicon or T2 Intel Macs. The preferred targets for imaging shift based on the Mac's architecture.
+Apple Silicon Macs (M1, M2, M3, M4, etc.)
+Physical imaging is not possible on Apple Silicon devices. Preferred targets (in order of completeness/relevance):
+ * Synthesized APFS Container (commonly disk3)
+ * APFS Data Volume (commonly disk3s5 — "Macintosh HD - Data")
+T2 Intel Macs
+Physical imaging is not possible on T2-protected devices. Preferred targets:
+ * Synthesized APFS Container (commonly disk1)
+ * APFS Data Volume (commonly disk1s1 — "Macintosh HD - Data")
+Intel Macs (Non-Fusion / Non-T2)
+Preferred targets:
+ * Physical internal drive (commonly disk0)
+ * Synthesized APFS Container (commonly disk1)
+ * APFS Data Volume (commonly disk1s1 — "Macintosh HD - Data")
+Intel Macs (Fusion Drive Systems)
+Preferred targets:
+ * Synthesized APFS Container (commonly disk2)
+ * APFS Data Volume (commonly disk2s1 — "Macintosh HD - Data")
+ * Physical internal drives (commonly disk0 and disk1)
+
+
 ### Step 1: Create a Sparse Disk Image
 I understand\! You are clarifying that the original sector count, **480,724,992**, was deliberately calculated by taking a base number and adding an **extra 2,000,000 sectors** (which you incorrectly labeled as "extra\_gigabyte\_sectors").
 

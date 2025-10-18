@@ -31,34 +31,62 @@ To perform a successful acquisition, you will need:
 
 The most common method for obtaining a full-disk equivalent image in a forensically sound manner on a live macOS system is by using the **`asr`** (Apple Software Restore) utility.
 
-💾 Mac Forensics Imaging Guide
-This document outlines critical warnings and supported source options for forensic imaging of Apple Mac computers. Adherence to these guidelines is essential for obtaining complete and usable images.
+# 🍏 Mac Forensic Imaging Source Selection Guide
 
-⚠️ Critical Warnings
-It is imperative that you are familiar with imaging Apple file systems before proceeding with any steps.
- * Choosing the wrong source or output format may result in an unusable or incomplete image.
- * Thoroughly review this manual before starting the imaging process.
- * Always follow your agency’s approved procedures in conjunction with this guide.
-🎯 Supported Source Options by Mac Type
-Physical imaging is not possible on Apple Silicon or T2 Intel Macs. The preferred targets for imaging shift based on the Mac's architecture.
-Apple Silicon Macs (M1, M2, M3, M4, etc.)
-Physical imaging is not possible on Apple Silicon devices. Preferred targets (in order of completeness/relevance):
- * Synthesized APFS Container (commonly disk3)
- * APFS Data Volume (commonly disk3s5 — "Macintosh HD - Data")
-T2 Intel Macs
-Physical imaging is not possible on T2-protected devices. Preferred targets:
- * Synthesized APFS Container (commonly disk1)
- * APFS Data Volume (commonly disk1s1 — "Macintosh HD - Data")
-Intel Macs (Non-Fusion / Non-T2)
-Preferred targets:
- * Physical internal drive (commonly disk0)
- * Synthesized APFS Container (commonly disk1)
- * APFS Data Volume (commonly disk1s1 — "Macintosh HD - Data")
-Intel Macs (Fusion Drive Systems)
-Preferred targets:
- * Synthesized APFS Container (commonly disk2)
- * APFS Data Volume (commonly disk2s1 — "Macintosh HD - Data")
- * Physical internal drives (commonly disk0 and disk1)
+This guide details the supported source options for forensic imaging of Apple Mac computers, emphasizing critical warnings and target priorities based on system architecture (Apple Silicon, T2, Intel, and Fusion Drive).
+
+---
+
+## ⚠️ CRITICAL WARNINGS - READ BEFORE PROCEEDING
+
+Before attempting any imaging procedure, **you must be thoroughly familiar with imaging Apple file systems (APFS)**.
+
+* Choosing the **wrong source** or **output format** may result in an **unusable or incomplete image**.
+* **Thoroughly review this manual** in its entirety.
+* **Always follow your agency's approved forensic procedures** in conjunction with these guidelines.
+
+---
+
+## 💾 Supported Source Options by Mac Type
+
+Physical imaging of the entire drive is generally **not possible** on modern, secured Macs (Apple Silicon and T2 Intel). The preferred targets (listed in order of priority) focus on containers or data volumes.
+
+### 1. Apple Silicon Macs (M1, M2, M3, M4, etc.)
+
+> 🛑 **Physical imaging is NOT possible** on Apple Silicon devices.
+
+| Priority | Target Description | Common Identifier | Notes |
+| :---: | :--- | :--- | :--- |
+| **1** | **Synthesized APFS Container** | `disk3` | The preferred complete logical target. |
+| **2** | **APFS Data Volume** | `disk3s5` — "Macintosh HD - Data" | Contains user data, applications, and settings. |
+
+### 2. T2 Intel Macs
+
+> 🛑 **Physical imaging is NOT possible** on T2-protected devices.
+
+| Priority | Target Description | Common Identifier | Notes |
+| :---: | :--- | :--- | :--- |
+| **1** | **Synthesized APFS Container** | `disk1` | The preferred complete logical target. |
+| **2** | **APFS Data Volume** | `disk1s1` — "Macintosh HD - Data" | Contains user data, applications, and settings. |
+
+### 3. Intel Macs (Non-Fusion / Non-T2)
+
+> ✅ **Physical imaging is possible** on these legacy systems.
+
+| Priority | Target Description | Common Identifier | Notes |
+| :---: | :--- | :--- | :--- |
+| **1** | **Physical internal drive** | `disk0` | **Highest priority.** Captures all sectors, including unallocated space. |
+| **2** | Synthesized APFS Container | `disk1` | A logical fallback. |
+| **3** | APFS Data Volume | `disk1s1` — "Macintosh HD - Data" | Contains user data. |
+
+### 4. Intel Macs (Fusion Drive Systems)
+
+| Priority | Target Description | Common Identifier | Notes |
+| :---: | :--- | :--- | :--- |
+| **1** | **Synthesized APFS Container** | `disk2` | The preferred logical target that encompasses the entire Fusion Volume. |
+| **2** | APFS Data Volume | `disk2s1` — "Macintosh HD - Data" | Contains user data. |
+| **3** | Physical internal drives | `disk0` and `disk1` | Imaging the individual physical drives is the lowest priority due to complexity. |
+
 
 
 ### Step 1: Create a Sparse Disk Image

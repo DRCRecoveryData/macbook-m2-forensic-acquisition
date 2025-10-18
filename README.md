@@ -36,17 +36,17 @@ The most common method for obtaining a full-disk equivalent image in a forensica
 A **sparse disk image** (`.sparseimage`) is created to serve as the target for the acquisition. The user first created the destination directory and then the image with the specific sector count of the source disk.
 
 ```bash
-quynhluong@Air-cua-Quynh ~ % mkdir -p /Volumes/llidata/ASR_Images
+quynhluong@Air-cua-Quynh ~ % mkdir -p /Volumes/data/Images
 quynhluong@Air-cua-Quynh ~ % hdiutil create -sectors 480724992 \
     -fs APFS \
     -type SPARSE \
-    -volname "MacBook_Air_ASR_Image" \
-    -o /Volumes/llidata/ASR_Images/MacBook_Air_ASR_Image.sparseimage
+    -volname "disk3s1s1" \
+    -o /Volumes/data/Images/disk3s1s1.sparseimage
 ```
 
   * **Log Output:**
     ```
-    created: /Volumes/llidata/ASR_Images/MacBook_Air_ASR_Image.sparseimage
+    created: /Volumes/data/Images/disk3s1s1.sparseimage
     ```
 
 ### Step 2: Attach the Image and Identify Target
@@ -54,10 +54,10 @@ quynhluong@Air-cua-Quynh ~ % hdiutil create -sectors 480724992 \
 The newly created image was attached and the volume identifier was noted for the target of the `asr` command.
 
 ```bash
-quynhluong@Air-cua-Quynh ~ % hdiutil attach -nobrowse /Volumes/llidata/ASR_Images/MacBook_Air_ASR_Image.sparseimage
+quynhluong@Air-cua-Quynh ~ % hdiutil attach -nobrowse /Volumes/data/Images/disk3s1s1.sparseimage
 ```
 
-  * **Target Volume Identification:** The sparse image volume was successfully mounted as **/dev/disk9s1** under the name `MacBook_Air_ASR_Image`.
+  * **Target Volume Identification:** The sparse image volume was successfully mounted as **/dev/disk9s1** under the name `disk3s1s1`.
 
 ### Step 3: Perform the `asr` Restore (Acquisition)
 
@@ -92,9 +92,9 @@ After the acquisition completed, the sparse image volume was detached, and then 
 quynhluong@Air-cua-Quynh ~ % hdiutil detach /dev/disk9s1
 
 # Convert to a compressed DMG
-quynhluong@Air-cua-Quynh ~ % hdiutil convert /Volumes/llidata/ASR_Images/MacBook_Air_ASR_Image.sparseimage \
+quynhluong@Air-cua-Quynh ~ % hdiutil convert /Volumes/data/Images/disk3s1s1.sparseimage \
     -format UDZO \
-    -o /Volumes/llidata/ASR_Images/MacBook_Air_ASR_Image.dmg
+    -o /Volumes/data/Images/disk3s1s1.dmg
 ```
 
 ### Step 5: Acquisition Statistics and Verification Hashes
@@ -105,16 +105,19 @@ The conversion process provided detailed statistics and the necessary cryptograp
 
       * **Total Acquisition Time**: $12\text{m } 13.748\text{s}$.
       * **Final File Size**: $169,655,418,427\text{ bytes}$.
-      * **Acquisition Speed**: $261.7\text{ MB/giây}$ (MB/sec).
+      * **Acquisition Speed**: $261.7\text{ MB/sec}$ (MB/sec).
       * **Compression Efficiency**: $31.1\%$ savings achieved.
 
   * **Acquisition Integrity Hashes:**
 
     ```bash
-    quynhluong@Air-cua-Quynh ~ % md5 /Volumes/llidata/ASR_Images/MacBook_Air_ASR_Image.dmg
+    quynhluong@Air-cua-Quynh ~ % md5 /Volumes/data/Images/disk3s1s1.dmg
     MD5 = 71eb365002639bd81b26c5cb5c6946c6
 
-    quynhluong@Air-cua-Quynh ~ % shasum -a 256 /Volumes/llidata/ASR_Images/MacBook_Air_ASR_Image.dmg
+    quynhluong@Air-cua-Quynh ~ % shasum -a 1 /Volumes/data/Images/disk3s1s1.dmg
+    SHA-1 = c39ac5a93b5a25f33d457af4946fc536cee50f2b
+    
+    quynhluong@Air-cua-Quynh ~ % shasum -a 256 /Volumes/data/Images/disk3s1s1.dmg
     SHA256 = e51f38054c383107632f4d9302a1035bd009ed8e0df3f349e1008469e36e6d46
     ```
 
@@ -137,8 +140,8 @@ The conversion process provided detailed statistics and the necessary cryptograp
 
 | Volume Name | Identifier | Size | Usage/Notes |
 | :--- | :--- | :--- | :--- |
-| **llidata** | `disk4s2` | $962.6\text{ GB}$ | External destination volume. Used $504\text{ GiB}$ ($57\%$ capacity). |
-| **llimager** | `disk4s1` | $37.6\text{ GB}$ | External volume. Used $53\text{ MiB}$ ($1\%$ capacity). |
+| **data** | `disk4s2` | $962.6\text{ GB}$ | External destination volume. Used $504\text{ GiB}$ ($57\%$ capacity). |
+| **imager** | `disk4s1` | $37.6\text{ GB}$ | External volume. Used $53\text{ MiB}$ ($1\%$ capacity). |
 
 -----
 

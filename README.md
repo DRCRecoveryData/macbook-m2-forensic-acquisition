@@ -20,7 +20,7 @@ This guide focuses on:
 
 To perform a successful acquisition, you will need:
 
-- **Target Device**: Apple Silicon MacBook (M1/M2/M3)
+- **Target Device**: Apple Silicon MacBook (M1/M2/M3/M4)
 - **External Storage**: An external drive (formatted as **APFS** or **HFS+**) with enough capacity to store the image.
 - **Terminal Access**: Admin (`sudo`) privileges, with **Full Disk Access** granted to Terminal:
 ```

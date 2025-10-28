@@ -1,6 +1,6 @@
 # 🍎 macbook-m2-forensic-acquisition
 
-## 🔐 Forensic Acquisition of Apple Silicon MacBooks (M2/M3)
+## 🔐 Forensic Acquisition of Apple Silicon MacBooks (M2/M3/M4)
 
 This repository provides documentation, step-by-step guides, and command-line examples for performing forensically sound acquisitions of internal drives on Apple MacBook devices utilizing the **M2** or **M3** Apple Silicon chips.
 
